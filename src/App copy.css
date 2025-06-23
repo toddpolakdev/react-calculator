@@ -1,0 +1,113 @@
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+
+  /* max-width: 500px; */
+  /* margin: auto;
+  padding: 20px;
+  background-color: lightgray;
+  border: 1px solid black; */
+}
+.calculator {
+  /* align-items: center;
+  justify-content: center;
+  max-width: 450px; */
+  /* height: 450px; */
+
+  /* border: 1px solid rgb(89, 89, 89); */
+  /* border-radius: 7%; */
+  /* background-color: rgb(234, 194, 155); */
+  /* box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.5); */
+}
+button {
+  /* height: 60px; */
+  /* font-size: 30px; */
+  background-color: black;
+  color: white;
+}
+
+.keys {
+  display: flex;
+  flex-wrap: wrap;
+  /* width: 400px; */
+  border: 2px solid black;
+}
+
+.numbers {
+  display: flex;
+  flex-wrap: wrap;
+  /* width: 300px; */
+}
+
+.numbers button {
+  flex: 0 0 33.33%;
+}
+
+.numbers button,
+.symbols button {
+  box-sizing: border-box;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.symbols {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /* width: 100px; */
+}
+
+.symbols button {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.button-sign {
+  background-color: rgb(54, 94, 32);
+}
+
+button:hover {
+  background-color: lightgray;
+  color: black;
+}
+
+.zero {
+  flex: 0 0 66.66% !important;
+}
+
+.clear,
+.backspace {
+  flex: 0 0 50% !important;
+  font-size: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.display {
+  text-align: right;
+  /* height: 20px; */
+  padding: 5px;
+  overflow: hidden;
+}
+
+.result {
+  /* width: 400px; */
+  text-align: right;
+  border: 1px solid darkgray;
+  background-color: seashell;
+  border: 2px solid darkgray;
+}
+
+.result p {
+  font-size: 30px;
+  margin: 5px;
+  padding: 5px;
+  overflow: hidden;
+}
