@@ -1,146 +1,378 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f0f0f0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1rem;
 }
 
 .app {
   display: flex;
   flex-direction: column;
-  width: 90vw;
-  max-width: 500px;
-  background-color: lightgray;
-  padding: 20px;
-  border: 1px solid black;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
+  width: 90vw; /* Use viewport width - much more direct! */
+  max-width: 1200px; /* Prevent it from getting TOO wide on huge screens */
+  min-width: 320px; /* Prevent it from getting too narrow */
+  background-color: #2d3748;
+  padding: 2rem;
+  border-radius: 24px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .calculator {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 1.5rem;
 }
 
-.keys {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.numbers {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 70%;
-}
-
-.symbols {
+/* Display Styles */
+.display-container {
+  background-color: #1a202c;
+  border-radius: 16px;
+  padding: 1.5rem;
+  min-height: 100px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 25%;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
 }
 
-.symbols button {
-  flex: 1;
-  margin: 5px 0;
-}
-
-button {
-  background-color: black;
-  color: white;
-  padding: 20px;
-  border: none;
-  font-size: 1.2rem;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  flex: 1 1 30%;
-}
-
-button:hover {
-  background-color: seashell;
-  color: black;
+.previous-calculation {
+  color: #a0aec0;
+  font-size: 0.9rem;
+  text-align: right;
+  margin-bottom: 0.25rem;
+  min-height: 1.2rem;
 }
 
 .display {
-  text-align: center;
-  height: 1.5em;
-  /* padding: 20px; */
-  font-size: 2rem;
-  background-color: seashell;
-  border: 2px solid darkgray;
-  border-radius: 5px;
-  margin-bottom: 10px;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 300;
+  text-align: right;
+  word-break: break-all;
+  line-height: 1.2;
 }
 
-.result {
-  text-align: center;
-  height: 2.5em;
-  padding: 1em;
-  font-size: 2rem;
-  background-color: rgb(187, 94, 28);
-  color: #fff;
-  border: 2px solid darkgray;
-  border-radius: 5px;
-  overflow: -moz-hidden-unscrollable;
+.display.error {
+  color: #f56565;
 }
 
-.zero {
-  flex: 0 0 64%;
+/* Keys Layout */
+.keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 70px);
+  gap: 1rem;
+  min-height: 450px;
 }
 
-.clear,
-.backspace {
-  flex: 0 0 47%;
+.numbers {
+  display: contents;
+}
+
+.symbols {
+  display: contents;
+}
+
+/* Button Styles */
+button {
+  background-color: #4a5568;
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70px;
+  touch-action: manipulation;
+}
+
+button:hover {
+  background-color: #2d3748;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+  background-color: #1a202c;
+}
+
+/* Number buttons */
+button[name="0"],
+button[name="1"],
+button[name="2"],
+button[name="3"],
+button[name="4"],
+button[name="5"],
+button[name="6"],
+button[name="7"],
+button[name="8"],
+button[name="9"],
+button[name="."] {
+  background-color: #718096;
+}
+
+button[name="0"],
+button[name="1"],
+button[name="2"],
+button[name="3"],
+button[name="4"],
+button[name="5"],
+button[name="6"],
+button[name="7"],
+button[name="8"],
+button[name="9"],
+button[name="."]:hover {
+  background-color: #4a5568;
+}
+
+/* Operator buttons */
+button[name="+"],
+button[name="-"],
+button[name="*"],
+button[name="/"],
+button[name="="] {
+  background-color: #ed8936;
+  color: white;
+}
+
+button[name="+"],
+button[name="-"],
+button[name="*"],
+button[name="/"],
+button[name="="]:hover {
+  background-color: #dd6b20;
+}
+
+/* Special buttons */
+button[name="clear"],
+button[name="backspace"] {
+  background-color: #e53e3e;
   font-size: 1rem;
 }
 
-/* Media query for mobile devices */
-@media (max-width: 600px) {
+button[name="clear"],
+button[name="backspace"]:hover {
+  background-color: #c53030;
+}
+
+/* Grid positioning */
+button[name="clear"] {
+  grid-column: span 2;
+}
+
+button[name="backspace"] {
+  grid-column: span 2;
+}
+
+button[name="0"] {
+  grid-column: span 2;
+}
+
+/* DESKTOP: 768px and up - Adjust width and scaling */
+@media (min-width: 768px) {
   .app {
-    width: 100vw;
-    padding: 10px;
+    width: 50vw; /* Slightly narrower on larger screens for better proportion */
+    max-width: 1000px;
+    padding: 2.5rem;
   }
 
-  .calculator {
-    flex-direction: column;
-  }
-
-  .keys {
-    flex-direction: column; /* Stack numbers and symbols vertically */
-  }
-
-  .numbers {
-    width: 100%; /* Full width on mobile */
-    justify-content: space-between;
-  }
-
-  .symbols {
-    width: 100%;
-    flex-direction: row; /* Change to row on mobile */
-    justify-content: space-between;
-  }
-
-  button {
-    font-size: 1rem; /* Smaller button font */
-    padding: 10px; /* Smaller button padding */
+  .display-container {
+    min-height: 120px;
+    padding: 2rem;
   }
 
   .display {
-    font-size: 1.5rem; /* Smaller display font */
-    padding: 15px; /* Adjust padding */
+    font-size: 3rem;
   }
 
-  /* .result p {
-    font-size: 1.5rem;
-  } */
+  .previous-calculation {
+    font-size: 1.1rem;
+  }
+
+  .keys {
+    grid-template-rows: repeat(6, 80px);
+    min-height: 500px;
+    gap: 1rem;
+  }
+
+  button {
+    min-height: 80px;
+    font-size: 1.6rem;
+    border-radius: 20px;
+  }
+
+  button[name="clear"],
+  button[name="backspace"] {
+    font-size: 1.2rem;
+  }
+}
+
+/* LARGE DESKTOP: 1200px and up - Even better proportions */
+@media (min-width: 1200px) {
+  .app {
+    /* width: 70vw; */
+    max-width: 1200px;
+    padding: 3rem;
+  }
+
+  .display-container {
+    min-height: 140px;
+  }
+
+  .display {
+    font-size: 3.5rem;
+  }
+
+  .keys {
+    grid-template-rows: repeat(6, 90px);
+    min-height: 560px;
+  }
+
+  button {
+    min-height: 90px;
+    font-size: 1.8rem;
+  }
+}
+
+/* EXTRA LARGE: 1600px and up - Maximum proportional width */
+@media (min-width: 1600px) {
+  .app {
+    width: 60vw; /* Great proportion on ultra-wide screens */
+    max-width: 1400px;
+    padding: 3.5rem;
+  }
+
+  .display-container {
+    min-height: 160px;
+    padding: 2.5rem;
+  }
+
+  .display {
+    font-size: 4rem;
+  }
+
+  .previous-calculation {
+    font-size: 1.3rem;
+  }
+
+  .keys {
+    grid-template-rows: repeat(6, 100px);
+    min-height: 620px;
+    gap: 1.2rem;
+  }
+
+  button {
+    min-height: 100px;
+    font-size: 2rem;
+  }
+
+  button[name="clear"],
+  button[name="backspace"] {
+    font-size: 1.4rem;
+  }
+}
+
+/* MOBILE: 480px and down */
+@media (max-width: 480px) {
+  body {
+    padding: 0.5rem;
+  }
+
+  .app {
+    width: 95vw; /* Use more of the screen on mobile */
+    min-width: 280px;
+    padding: 1rem;
+    border-radius: 15px;
+  }
+
+  .display {
+    font-size: 1.8rem;
+  }
+
+  .previous-calculation {
+    font-size: 0.8rem;
+  }
+
+  .keys {
+    grid-template-rows: repeat(6, 50px);
+    min-height: 320px;
+    gap: 0.5rem;
+  }
+
+  button {
+    font-size: 1.1rem;
+    min-height: 50px;
+  }
+
+  button[name="clear"],
+  button[name="backspace"] {
+    font-size: 0.9rem;
+  }
+}
+
+/* EXTRA SMALL: 320px and down */
+@media (max-width: 320px) {
+  .app {
+    padding: 0.75rem;
+  }
+
+  .display {
+    font-size: 1.6rem;
+  }
+
+  .keys {
+    grid-template-rows: repeat(6, 45px);
+    min-height: 290px;
+    gap: 0.4rem;
+  }
+
+  button {
+    font-size: 1rem;
+    min-height: 45px;
+  }
+}
+
+/* LANDSCAPE MOBILE */
+@media (max-height: 600px) and (orientation: landscape) {
+  body {
+    align-items: flex-start;
+    padding-top: 1rem;
+  }
+
+  .app {
+    width: 60vw; /* Use viewport width for landscape too */
+    max-width: 500px;
+  }
+
+  .display-container {
+    min-height: 60px;
+  }
+
+  .display {
+    font-size: 1.6rem;
+  }
+
+  .keys {
+    grid-template-rows: repeat(6, 45px);
+    min-height: 290px;
+  }
+
+  button {
+    min-height: 45px;
+    font-size: 1rem;
+  }
 }
