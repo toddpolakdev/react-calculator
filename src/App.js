@@ -5,7 +5,7 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <div className="app">
-      <h1>Calculator</h1>
+      <h1>Scientific Calculator</h1>
       <Calculator />
       <Footer />
     </div>

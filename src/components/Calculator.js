@@ -8,6 +8,7 @@ const Calculator = () => {
   const [operation, setOperation] = useState(null);
   const [waitingForOperand, setWaitingForOperand] = useState(false);
   const [error, setError] = useState(false);
+  const [angleMode, setAngleMode] = useState("deg");
 
   const inputNumber = (num) => {
     if (waitingForOperand) {
@@ -29,6 +30,23 @@ const Calculator = () => {
     setError(false);
   };
 
+  const inputConstant = (constant) => {
+    let value;
+    switch (constant) {
+      case "pi":
+        value = Math.PI;
+        break;
+      case "e":
+        value = Math.E;
+        break;
+      default:
+        return;
+    }
+    setDisplay(String(value));
+    setWaitingForOperand(true);
+    setError(false);
+  };
+
   const clear = () => {
     setDisplay("0");
     setPreviousValue(null);
@@ -44,6 +62,140 @@ const Calculator = () => {
       setDisplay("0");
     }
     setError(false);
+  };
+
+  const toggleAngleMode = () => {
+    setAngleMode(angleMode === "deg" ? "rad" : "deg");
+  };
+
+  const toRadians = (value) => {
+    return angleMode === "deg" ? value * (Math.PI / 180) : value;
+  };
+
+  const fromRadians = (value) => {
+    return angleMode === "deg" ? value * (180 / Math.PI) : value;
+  };
+
+  const factorial = (n) => {
+    if (n === 0 || n === 1) return 1;
+    let result = 1;
+    for (let i = 2; i <= n; i++) {
+      result *= i;
+    }
+    return result;
+  };
+
+  const performPlusMinus = () => {
+    const currentValue = parseFloat(display);
+    if (!isNaN(currentValue) && currentValue !== 0) {
+      const newValue = -currentValue;
+      setDisplay(String(newValue));
+      setError(false);
+    }
+  };
+
+  const performPercent = () => {
+    const currentValue = parseFloat(display);
+    if (!isNaN(currentValue)) {
+      const newValue = currentValue / 100;
+      setDisplay(String(newValue));
+      setWaitingForOperand(true);
+      setError(false);
+    }
+  };
+
+  const performScientificOperation = (func) => {
+    const inputValue = parseFloat(display);
+
+    if (isNaN(inputValue)) {
+      setError(true);
+      setDisplay("Error");
+      return;
+    }
+
+    let result;
+
+    try {
+      switch (func) {
+        case "sqrt":
+          if (inputValue < 0) {
+            throw new Error("Invalid input");
+          }
+          result = Math.sqrt(inputValue);
+          break;
+        case "square":
+          result = inputValue * inputValue;
+          break;
+        case "sin":
+          result = Math.sin(toRadians(inputValue));
+          break;
+        case "cos":
+          result = Math.cos(toRadians(inputValue));
+          break;
+        case "tan":
+          result = Math.tan(toRadians(inputValue));
+          break;
+        case "asin":
+          if (inputValue < -1 || inputValue > 1) {
+            throw new Error("Invalid input");
+          }
+          result = fromRadians(Math.asin(inputValue));
+          break;
+        case "acos":
+          if (inputValue < -1 || inputValue > 1) {
+            throw new Error("Invalid input");
+          }
+          result = fromRadians(Math.acos(inputValue));
+          break;
+        case "atan":
+          result = fromRadians(Math.atan(inputValue));
+          break;
+        case "log":
+          if (inputValue <= 0) {
+            throw new Error("Invalid input");
+          }
+          result = Math.log10(inputValue);
+          break;
+        case "ln":
+          if (inputValue <= 0) {
+            throw new Error("Invalid input");
+          }
+          result = Math.log(inputValue);
+          break;
+        case "factorial":
+          if (
+            inputValue < 0 ||
+            !Number.isInteger(inputValue) ||
+            inputValue > 170
+          ) {
+            throw new Error("Invalid input");
+          }
+          result = factorial(inputValue);
+          break;
+        case "reciprocal":
+          if (inputValue === 0) {
+            throw new Error("Division by zero");
+          }
+          result = 1 / inputValue;
+          break;
+        default:
+          return;
+      }
+
+      if (isNaN(result) || !isFinite(result)) {
+        throw new Error("Invalid result");
+      }
+
+      setDisplay(String(result));
+      setWaitingForOperand(true);
+      setError(false);
+    } catch (error) {
+      setError(true);
+      setDisplay("Error");
+      setPreviousValue(null);
+      setOperation(null);
+      setWaitingForOperand(true);
+    }
   };
 
   const performOperation = (nextOperation) => {
@@ -85,6 +237,8 @@ const Calculator = () => {
           return null;
         }
         return firstValue / secondValue;
+      case "power":
+        return Math.pow(firstValue, secondValue);
       case "=":
         return secondValue;
       default:
@@ -122,11 +276,41 @@ const Calculator = () => {
       case "=":
         performOperation(name);
         break;
+      case "power":
+        performOperation(name);
+        break;
+      case "sqrt":
+      case "square":
+      case "sin":
+      case "cos":
+      case "tan":
+      case "asin":
+      case "acos":
+      case "atan":
+      case "log":
+      case "ln":
+      case "factorial":
+      case "reciprocal":
+        performScientificOperation(name);
+        break;
+      case "pi":
+      case "e":
+        inputConstant(name);
+        break;
+      case "plusminus":
+        performPlusMinus();
+        break;
+      case "percent":
+        performPercent();
+        break;
       case "clear":
         clear();
         break;
       case "backspace":
         backspace();
+        break;
+      case "angle-mode":
+        toggleAngleMode();
         break;
       default:
         break;
@@ -142,7 +326,8 @@ const Calculator = () => {
     if (Math.abs(num) > 999999999 || (Math.abs(num) < 0.000001 && num !== 0)) {
       return num.toExponential(6);
     }
-    return parseFloat(num.toFixed(8)).toString();
+
+    return parseFloat(num.toFixed(10)).toString();
   };
 
   return (
@@ -152,8 +337,9 @@ const Calculator = () => {
         error={error}
         operation={operation}
         previousValue={previousValue}
+        angleMode={angleMode}
       />
-      <Keys handleClick={handleClick} />
+      <Keys handleClick={handleClick} angleMode={angleMode} />
     </div>
   );
 };

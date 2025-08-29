@@ -1,7 +1,7 @@
 function Footer() {
   return (
     <footer style={{ textAlign: "center", padding: "50px" }}>
-      <span>&copy; {new Date().getFullYear()}</span>
+      <span>&copy; {new Date().getFullYear()} Todd Polak</span>
     </footer>
   );
 }
