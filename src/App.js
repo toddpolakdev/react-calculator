@@ -1,13 +1,13 @@
 import "./App.css";
 import Calculator from "./components/Calculator";
-// import Footer from "./components/Footer";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <div className="app">
-      {/* <h1>Calculator</h1> */}
+      <h1>Calculator</h1>
       <Calculator />
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

@@ -82,7 +82,7 @@ const Calculator = () => {
         return firstValue * secondValue;
       case "/":
         if (secondValue === 0) {
-          return null; // Division by zero
+          return null;
         }
         return firstValue / secondValue;
       case "=":
@@ -96,7 +96,7 @@ const Calculator = () => {
     const { name } = e.target;
 
     if (error && name !== "clear") {
-      return; // Don't allow input when there's an error except clear
+      return;
     }
 
     switch (name) {
@@ -133,19 +133,15 @@ const Calculator = () => {
     }
   };
 
-  // Format display for long numbers
   const formatDisplay = (value) => {
     if (value === "Error") return value;
 
     const num = parseFloat(value);
     if (isNaN(num)) return value;
 
-    // Handle very large or very small numbers
     if (Math.abs(num) > 999999999 || (Math.abs(num) < 0.000001 && num !== 0)) {
       return num.toExponential(6);
     }
-
-    // Limit decimal places for display
     return parseFloat(num.toFixed(8)).toString();
   };
 

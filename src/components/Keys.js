@@ -1,15 +1,12 @@
 function Keys({ handleClick }) {
   return (
     <div className="keys">
-      {/* Row 1: Clear and Backspace */}
       <button name="clear" onClick={handleClick} className="clear">
         Clear
       </button>
       <button name="backspace" onClick={handleClick} className="backspace">
         ⌫
       </button>
-
-      {/* Row 2: 7, 8, 9, / */}
       <button name="7" onClick={handleClick}>
         7
       </button>
@@ -22,8 +19,6 @@ function Keys({ handleClick }) {
       <button name="/" onClick={handleClick}>
         ÷
       </button>
-
-      {/* Row 3: 4, 5, 6, * */}
       <button name="4" onClick={handleClick}>
         4
       </button>
@@ -36,8 +31,6 @@ function Keys({ handleClick }) {
       <button name="*" onClick={handleClick}>
         ×
       </button>
-
-      {/* Row 4: 1, 2, 3, - */}
       <button name="1" onClick={handleClick}>
         1
       </button>
@@ -50,8 +43,6 @@ function Keys({ handleClick }) {
       <button name="-" onClick={handleClick}>
         −
       </button>
-
-      {/* Row 5: 0 (spans 2), ., + */}
       <button name="0" onClick={handleClick}>
         0
       </button>
@@ -61,8 +52,6 @@ function Keys({ handleClick }) {
       <button name="+" onClick={handleClick}>
         +
       </button>
-
-      {/* Row 6: = (spans full width) */}
       <button name="=" onClick={handleClick} style={{ gridColumn: "span 4" }}>
         =
       </button>

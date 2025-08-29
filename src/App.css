@@ -17,9 +17,9 @@ body {
 .app {
   display: flex;
   flex-direction: column;
-  width: 90vw; /* Use viewport width - much more direct! */
-  max-width: 1200px; /* Prevent it from getting TOO wide on huge screens */
-  min-width: 320px; /* Prevent it from getting too narrow */
+  width: 90vw;
+  max-width: 1200px;
+  min-width: 320px;
   background-color: #2d3748;
   padding: 2rem;
   border-radius: 24px;
@@ -33,7 +33,6 @@ body {
   gap: 1.5rem;
 }
 
-/* Display Styles */
 .display-container {
   background-color: #1a202c;
   border-radius: 16px;
@@ -66,7 +65,6 @@ body {
   color: #f56565;
 }
 
-/* Keys Layout */
 .keys {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -83,7 +81,6 @@ body {
   display: contents;
 }
 
-/* Button Styles */
 button {
   background-color: #4a5568;
   color: white;
@@ -110,7 +107,6 @@ button:active {
   background-color: #1a202c;
 }
 
-/* Number buttons */
 button[name="0"],
 button[name="1"],
 button[name="2"],
@@ -139,7 +135,6 @@ button[name="."]:hover {
   background-color: #4a5568;
 }
 
-/* Operator buttons */
 button[name="+"],
 button[name="-"],
 button[name="*"],
@@ -157,7 +152,6 @@ button[name="="]:hover {
   background-color: #dd6b20;
 }
 
-/* Special buttons */
 button[name="clear"],
 button[name="backspace"] {
   background-color: #e53e3e;
@@ -169,7 +163,6 @@ button[name="backspace"]:hover {
   background-color: #c53030;
 }
 
-/* Grid positioning */
 button[name="clear"] {
   grid-column: span 2;
 }
@@ -182,10 +175,9 @@ button[name="0"] {
   grid-column: span 2;
 }
 
-/* DESKTOP: 768px and up - Adjust width and scaling */
 @media (min-width: 768px) {
   .app {
-    width: 50vw; /* Slightly narrower on larger screens for better proportion */
+    width: 50vw;
     max-width: 1000px;
     padding: 2.5rem;
   }
@@ -221,10 +213,8 @@ button[name="0"] {
   }
 }
 
-/* LARGE DESKTOP: 1200px and up - Even better proportions */
 @media (min-width: 1200px) {
   .app {
-    /* width: 70vw; */
     max-width: 1200px;
     padding: 3rem;
   }
@@ -248,10 +238,9 @@ button[name="0"] {
   }
 }
 
-/* EXTRA LARGE: 1600px and up - Maximum proportional width */
 @media (min-width: 1600px) {
   .app {
-    width: 60vw; /* Great proportion on ultra-wide screens */
+    width: 60vw;
     max-width: 1400px;
     padding: 3.5rem;
   }
@@ -286,14 +275,13 @@ button[name="0"] {
   }
 }
 
-/* MOBILE: 480px and down */
 @media (max-width: 480px) {
   body {
     padding: 0.5rem;
   }
 
   .app {
-    width: 95vw; /* Use more of the screen on mobile */
+    width: 95vw;
     min-width: 280px;
     padding: 1rem;
     border-radius: 15px;
@@ -346,7 +334,6 @@ button[name="0"] {
   }
 }
 
-/* LANDSCAPE MOBILE */
 @media (max-height: 600px) and (orientation: landscape) {
   body {
     align-items: flex-start;
@@ -354,7 +341,7 @@ button[name="0"] {
   }
 
   .app {
-    width: 60vw; /* Use viewport width for landscape too */
+    width: 60vw;
     max-width: 500px;
   }
 
