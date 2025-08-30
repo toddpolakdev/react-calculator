@@ -5,65 +5,72 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+}
+
+.page-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-items: center;
+  min-height: 100vh;
+  width: 100%;
   padding: 1rem;
+  gap: 1rem;
 }
 
 .app {
+  width: 95vw;
+  min-width: 280px;
+  height: auto;
+  max-height: none;
   display: flex;
   flex-direction: column;
-  width: 95vw;
-  max-width: 800px;
-  min-width: 320px;
   background-color: #2d3748;
-  padding: 2rem;
-  border-radius: 24px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 1rem 1.5rem -0.3rem rgba(0, 0, 0, 0.2);
 }
 
 .app h1 {
   color: #fff;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
-.calculator {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
+/* Display section ~20% */
 .display-container {
   background-color: #1a202c;
-  border-radius: 16px;
-  padding: 1.5rem;
-  min-height: 120px;
+  border-radius: 1rem;
+  padding: 1rem;
+  flex: 0 0 20%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  margin-bottom: 1rem;
   position: relative;
 }
 
 .mode-indicator {
   position: absolute;
   top: 0.5rem;
-  left: 1rem;
+  left: 0.75rem;
   color: #4fd1c7;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
   padding: 0.2rem 0.5rem;
   background-color: rgba(79, 209, 199, 0.1);
-  border-radius: 8px;
+  border-radius: 0.5rem;
   border: 1px solid rgba(79, 209, 199, 0.3);
 }
 
 .previous-calculation {
   color: #a0aec0;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-align: right;
   margin-bottom: 0.25rem;
   min-height: 1.2rem;
@@ -71,7 +78,7 @@ body {
 
 .display {
   color: white;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 300;
   text-align: right;
   word-break: break-all;
@@ -82,43 +89,42 @@ body {
   color: #f56565;
 }
 
-.keys.scientific {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(8, 60px);
-  gap: 0.8rem;
-  min-height: 500px;
-}
-
 .keys {
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(6, 70px);
-  gap: 1rem;
-  min-height: 450px;
+  grid-template-rows: repeat(6, 1fr);
+  gap: 0.5rem;
+}
+
+.keys.scientific {
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  gap: 0.5rem;
+}
+
+.keys.scientific button[name="="] {
+  grid-column: span 3;
 }
 
 button {
   background-color: #4a5568;
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 1.2rem;
+  border-radius: 0.6rem;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 60px;
-  touch-action: manipulation;
 }
 
 button:hover {
   background-color: #2d3748;
   transform: translateY(-1px);
 }
-
 button:active {
   transform: translateY(0);
   background-color: #1a202c;
@@ -136,21 +142,7 @@ button[name="8"],
 button[name="9"],
 button[name="."] {
   background-color: #718096;
-  font-size: 1.4rem;
-}
-
-button[name="0"]:hover,
-button[name="1"]:hover,
-button[name="2"]:hover,
-button[name="3"]:hover,
-button[name="4"]:hover,
-button[name="5"]:hover,
-button[name="6"]:hover,
-button[name="7"]:hover,
-button[name="8"]:hover,
-button[name="9"]:hover,
-button[name="."]:hover {
-  background-color: #4a5568;
+  font-size: 1.2rem;
 }
 
 button[name="+"],
@@ -160,7 +152,48 @@ button[name="/"],
 button[name="="] {
   background-color: #ed8936;
   color: white;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+}
+
+button.function {
+  background-color: #38b2ac;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+button.constant {
+  background-color: #805ad5;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+button[name="clear"],
+button[name="backspace"] {
+  background-color: #e53e3e;
+  font-size: 0.9rem;
+}
+
+button[name="angle-mode"] {
+  background-color: #4fd1c7;
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+button[name="plusminus"],
+button[name="percent"] {
+  background-color: #38b2ac;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+button[name="power"] {
+  background-color: #ed8936;
+  color: white;
+  font-size: 1rem;
 }
 
 button[name="+"]:hover,
@@ -170,298 +203,77 @@ button[name="/"]:hover,
 button[name="="]:hover {
   background-color: #dd6b20;
 }
-
-button.function {
-  background-color: #38b2ac;
-  color: white;
-  font-size: 1rem;
-  font-weight: 600;
-}
-
 button.function:hover {
   background-color: #319795;
 }
-
-button.constant {
-  background-color: #805ad5;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
 button.constant:hover {
   background-color: #6b46c1;
 }
-
-button[name="clear"],
-button[name="backspace"] {
-  background-color: #e53e3e;
-  font-size: 1rem;
-}
-
 button[name="clear"]:hover,
 button[name="backspace"]:hover {
   background-color: #c53030;
 }
-
-button[name="angle-mode"] {
-  background-color: #4fd1c7;
-  color: #1a202c;
-  font-weight: 700;
-  font-size: 0.9rem;
-}
-
 button[name="angle-mode"]:hover {
   background-color: #38b2ac;
   color: white;
 }
-
-button[name="plusminus"],
-button[name="percent"] {
-  background-color: #38b2ac;
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
 button[name="plusminus"]:hover,
 button[name="percent"]:hover {
   background-color: #319795;
 }
-button[name="power"] {
-  background-color: #ed8936;
-  color: white;
-  font-size: 1.2rem;
-}
-
 button[name="power"]:hover {
   background-color: #dd6b20;
 }
 
-.keys.scientific button[name="="] {
-  grid-column: span 3;
-}
-
 @media (min-width: 768px) {
-  .app {
-    width: 80vw;
-    padding: 2.5rem;
+  .page-layout {
+    grid-template-columns: 1fr 2fr 1fr;
   }
 
-  .display-container {
-    min-height: 140px;
-    padding: 2rem;
+  .examples {
+    display: flex;
+    color: #fff;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    height: 90vh;
+  }
+
+  .app {
+    width: 100%;
   }
 
   .display {
-    font-size: 3rem;
-  }
-
-  .previous-calculation {
-    font-size: 1.1rem;
-  }
-
-  .mode-indicator {
-    font-size: 0.9rem;
-    top: 0.75rem;
-    left: 1.5rem;
-  }
-
-  .keys.scientific {
-    grid-template-rows: repeat(8, 70px);
-    min-height: 580px;
-    gap: 1rem;
+    font-size: 2.5rem;
   }
 
   button {
-    min-height: 70px;
-    font-size: 1.3rem;
-    border-radius: 16px;
-  }
-
-  button.function {
-    font-size: 1.1rem;
-  }
-
-  button[name="clear"],
-  button[name="backspace"] {
     font-size: 1.1rem;
   }
 }
 
 @media (min-width: 1024px) {
   .app {
-    width: 70vw;
-    padding: 3rem;
+    padding: 2rem;
   }
-
-  .display-container {
-    min-height: 160px;
-  }
-
   .display {
-    font-size: 3.5rem;
+    font-size: 3rem;
   }
-
-  .keys.scientific {
-    grid-template-rows: repeat(8, 80px);
-    min-height: 660px;
-  }
-
   button {
-    min-height: 80px;
-    font-size: 1.4rem;
-  }
-
-  button.function {
     font-size: 1.2rem;
   }
 }
 
 @media (min-width: 1400px) {
   .app {
-    width: 60vw;
-    padding: 3.5rem;
+    padding: 3rem;
   }
-
-  .display-container {
-    min-height: 180px;
-    padding: 2.5rem;
-  }
-
   .display {
-    font-size: 4rem;
+    font-size: 3.5rem;
   }
-
-  .previous-calculation {
+  button {
     font-size: 1.3rem;
-  }
-
-  .keys.scientific {
-    grid-template-rows: repeat(8, 90px);
-    min-height: 740px;
-    gap: 1.2rem;
-  }
-
-  button {
-    min-height: 90px;
-    font-size: 1.6rem;
-  }
-
-  button.function {
-    font-size: 1.3rem;
-  }
-
-  button[name="clear"],
-  button[name="backspace"] {
-    font-size: 1.3rem;
-  }
-}
-
-@media (max-width: 480px) {
-  body {
-    padding: 0.5rem;
-  }
-
-  .app {
-    width: 98vw;
-    min-width: 280px;
-    padding: 1rem;
-    border-radius: 15px;
-  }
-
-  .display {
-    font-size: 1.8rem;
-  }
-
-  .previous-calculation {
-    font-size: 0.8rem;
-  }
-
-  .mode-indicator {
-    font-size: 0.7rem;
-    top: 0.5rem;
-    left: 0.75rem;
-  }
-
-  .keys.scientific {
-    grid-template-rows: repeat(8, 45px);
-    min-height: 380px;
-    gap: 0.4rem;
-  }
-
-  button {
-    font-size: 1rem;
-    min-height: 45px;
-    border-radius: 8px;
-  }
-
-  button.function {
-    font-size: 0.8rem;
-  }
-
-  button[name="clear"],
-  button[name="backspace"] {
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 320px) {
-  .app {
-    padding: 0.75rem;
-  }
-
-  .display {
-    font-size: 1.6rem;
-  }
-
-  .keys.scientific {
-    grid-template-rows: repeat(8, 40px);
-    min-height: 340px;
-    gap: 0.3rem;
-  }
-
-  button {
-    font-size: 0.9rem;
-    min-height: 40px;
-  }
-
-  button.function {
-    font-size: 0.7rem;
-  }
-}
-
-@media (max-height: 600px) and (orientation: landscape) {
-  body {
-    align-items: flex-start;
-    padding-top: 1rem;
-  }
-
-  .app {
-    width: 90vw;
-    max-width: 1000px;
-  }
-
-  .display-container {
-    min-height: 80px;
-  }
-
-  .display {
-    font-size: 1.8rem;
-  }
-
-  .keys.scientific {
-    grid-template-rows: repeat(8, 40px);
-    min-height: 340px;
-    gap: 0.4rem;
-  }
-
-  button {
-    min-height: 40px;
-    font-size: 0.9rem;
-  }
-
-  button.function {
-    font-size: 0.8rem;
   }
 }
